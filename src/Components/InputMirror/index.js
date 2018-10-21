@@ -5,8 +5,8 @@ const InputMirror = (props) => {
     return(
         <div className="input-mirror-component">
             <h1>React Redux Input Field</h1> 
-            <input type="text" placeholder="Enter Text Here" value={props.inputValue} />
-            <p>{props.inputValue}</p>
+            <input type="text" placeholder="Start Typing" onChange={props.inputChanged} value={props.inputValue} />
+            <h3>{props.inputValue}</h3>
         </div>
     );
 }
@@ -17,4 +17,17 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(InputMirror);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        inputChanged: (event) => {
+            console.log('input changed from mapDispatchToProps', event.target.value);
+            const action = {
+                type: 'INPUT_CHANGE',
+                payload: event.target.value
+            };
+            dispatch(action);
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(InputMirror);
